@@ -12,27 +12,23 @@
         <h5 class="card-title">
           {{ product.name }}
         </h5>
-        <strong>Price: {{ product.price }}</strong
-        ><br />
+        <div>
+          {{ product.description }}
+        </div>
         <strong :style="{ color: product.quantity == 0 ? 'red' : null }">{{
           product.quantity == 0
             ? "Out of stock"
             : `Quantity: ${product.quantity}`
-        }}</strong>
-        <p class="card-text">
-          {{ product.description }}
-        </p>
-        <button class="btn btn-primary mr">
-          <router-link
-            class="edit"
-            :to="{ name: 'edit-product', params: { id: product.id } }"
-          >
-            Edit</router-link
-          >
-        </button>
-        <button class="btn btn-danger" @click="deleteProduct(product.id)">
-          Delete
-        </button>
+        }}</strong
+        ><br />
+        <strong>Price: {{ product.price }}</strong
+        ><br /><b />
+        <div class="mt-2">
+          <button class="btn btn-primary mr" @click="navigator()">Edit</button>
+          <button class="btn btn-danger" @click="deleteProduct(product.id)">
+            Delete
+          </button>
+        </div>
       </div>
     </div>
   </div>
@@ -45,6 +41,13 @@ export default {
 
   methods: {
     ...mapActions("product", ["deleteProduct"]),
+
+    navigator() {
+      this.$router.push({
+        name: "edit-product",
+        params: { id: this.product.id },
+      });
+    },
   },
 };
 </script>
@@ -55,9 +58,5 @@ export default {
 }
 .mr {
   margin-right: 16px;
-}
-.edit {
-  text-decoration: none;
-  color: white;
 }
 </style>

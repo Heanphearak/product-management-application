@@ -79,7 +79,6 @@ export default {
     async onsubmit() {
       if (this.validate()) {
         const response = await this.editProduct(this.input);
-        console.log(response);
         if (response) {
           this.$router.push("/");
         }

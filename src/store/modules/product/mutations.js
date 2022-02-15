@@ -12,12 +12,6 @@ export const REMOVE_PRODUCT = (state, product) => {
   });
 };
 
-export const EDIT_PRODUCT = (
-  state,
-  product
-) => {
-  console.log('edit')
-  state.product =  product
-//   const item = state.products.find(item => item.id === id);
-//     Object.assign(item, {id, name, description, price, quantity, image });
+export const EDIT_PRODUCT = (state, product) => {
+  state.product = product;
 };

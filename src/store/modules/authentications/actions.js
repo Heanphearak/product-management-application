@@ -1,4 +1,4 @@
-// import { reject, resolve } from "core-js/fn/promise";
+
 import Authentication from "../../../apis/Authentication";
 
 export const userLogin = ({ commit }, { username, password }) => {
