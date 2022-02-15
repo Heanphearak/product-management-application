@@ -1,6 +1,6 @@
 import Dashboard from './pages/Dashboard.vue'
 import Login from './pages/Login.vue'
-import Products from './pages/Products.vue'
+import AddNewProducts from './pages/AddNewProducts.vue'
 import EditProduct from './pages/EditProduct.vue'
 
 export default [
@@ -16,7 +16,7 @@ export default [
     },
     {
         path:'/products',
-        component: Products,
+        component: AddNewProducts,
         name: 'products',
     
     },
