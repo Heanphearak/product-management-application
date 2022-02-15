@@ -1,16 +1,36 @@
 <template>
   <div class="item-center mt-4">
-      <h3 class="my-4">ADD NEW PRODUCT</h3>
-    <custom-input type="text"  v-model="input.name" label="Name" :error="validation.inputId"/>
-    <custom-input type="text"  v-model="input.description" label="Description" :error="validation.inputPw"/>
-    <custom-input type="text" v-model="input.price" label="Price" :error="validation.inputId"/>
-    <custom-input type="number"  v-model="input.quantity" label="Quantity" :error="validation.inputPw"/>
+    <h3 class="my-4">ADD NEW PRODUCT</h3>
+    <custom-input
+      type="text"
+      v-model="input.name"
+      label="Name"
+      :error="validation.inputName"
+    />
+    <custom-input
+      type="text"
+      v-model="input.description"
+      label="Description"
+      :error="validation.inputDescription"
+    />
+    <custom-input
+      type="text"
+      v-model="input.price"
+      label="Price"
+      :error="validation.inputPrice"
+    />
+    <custom-input
+      type="number"
+      v-model="input.quantity"
+      label="Quantity"
+      :error="validation.inputQuantity"
+    />
 
     <button
       type="button"
       class="btn btn-primary col-3 btn-h"
       to="/dashboard"
-      @click="createProduct({name: input.name,description: input.description, quantity: input.quantity, price: input.price, image: input.image}); navigator()"
+      @click="onsubmit()"
     >
       Create Product
     </button>
@@ -22,14 +42,21 @@ import { mapActions } from "vuex";
 import CustomInput from "./CustomInput.vue";
 export default {
   components: { CustomInput },
-  name: "CreateProduct",
 
   data() {
     return {
-      input: { name: "", description: "", quantity: "", price: "",image: "https://via.placeholder.com/150x100" },
+      input: {
+        name: "",
+        description: "",
+        quantity: "",
+        price: "",
+        image: "https://via.placeholder.com/150x100",
+      },
       validation: {
-        inputId: "",
-        inputPw: "",
+        inputName: "",
+        inputDescription: "",
+        inputQuantity: "",
+        inputPrice: "",
       },
     };
   },
@@ -42,20 +69,36 @@ export default {
   },
 
   methods: {
-    ...mapActions("product",["createProduct"]),
-    navigator(){
-        this.$router.push('/')
-    }
-    // validate() {
-    //     if (!this.input.username && !this.input.password) {
-    //     this.validation.inputId = "Enter your username";
-    //     this.validation.inputPw = "Enter your password";
-    //   }else if (!this.input.username){
-    //     this.validation.inputId = "Enter your username";
-    //   }else if (!this.input.password){
-    //     this.validation.inputPw = "Enter your password";
-    //   }
-    // }
+    ...mapActions("product", ["createProduct"]),
+
+    async onsubmit() {
+      if (this.validate()) {
+        const response = await this.createProduct(this.input);
+        if (response) {
+          this.$router.push("/");
+        }
+      }
+    },
+    validate() {
+      let status = true;
+      if (!this.input.name) {
+        this.validation.inputName = "Enter your product name";
+        status = false;
+      }
+      if (!this.input.description) {
+        this.validation.inputDescription = "Enter description";
+        status = false;
+      }
+      if (!this.input.price) {
+        this.validation.inputPrice = "Enter product price";
+        status = false;
+      }
+      if (!this.input.quantity) {
+        this.validation.inputQuantity = "Enter quantity";
+        status = false;
+      }
+      return status;
+    },
   },
 
   computed: {},

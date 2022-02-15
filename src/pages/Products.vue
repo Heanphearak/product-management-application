@@ -1,24 +1,13 @@
 <template>
   <div>
-    <create-product :id="id"/>
+    <create-product />
   </div>
 </template>
 
 <script>
-// import ProductCard from "../components/ProductCard.vue";
 import CreateProduct from "../components/CreateProduct.vue";
 export default {
-  components: {  CreateProduct },
-  name: "Products",
-  props: ["id"],
-
-  mounted() {
-      console.log('====> =====>',this.id)
-  },
-
-  methods: {},
-
-  computed: {},
+  components: { CreateProduct },
 };
 </script>
 

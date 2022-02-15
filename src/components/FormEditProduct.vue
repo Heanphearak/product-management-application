@@ -1,46 +1,35 @@
 <template>
-  <div class="item-center mt-4" v-if="product">
+  <div class="item-center mt-4">
     <h3 class="my-4">UPDATE PRODUCT</h3>
     <custom-input
       type="text"
       v-model="input.name"
       label="Name"
-      :error="validation.inputId"
+      :error="validation.inputName"
     />
     <custom-input
       type="text"
       v-model="input.description"
       label="Description"
-      :error="validation.inputPw"
+      :error="validation.inputDescription"
     />
     <custom-input
       type="text"
       v-model="input.price"
       label="Price"
-      :error="validation.inputId"
+      :error="validation.inputPrice"
     />
     <custom-input
       type="number"
       v-model="input.quantity"
       label="Quantity"
-      :error="validation.inputPw"
+      :error="validation.inputQuantity"
     />
 
     <button
       type="button"
       class="btn btn-primary col-3 btn-h"
-      to="/dashboard"
-      @click="
-        editProduct({
-          id: input.id,
-          name: input.name,
-          description: input.description,
-          quantity: input.quantity,
-          price: input.price,
-          image: input.image,
-        });
-        navigator();
-      "
+      @click="onsubmit()"
     >
       Update Product
     </button>
@@ -48,12 +37,11 @@
 </template>
 
 <script>
-import { mapActions, mapState } from "vuex";
+import { mapActions } from "vuex";
 import CustomInput from "./CustomInput.vue";
+
 export default {
   components: { CustomInput },
-  name: "EditProduct",
-  props: ["productId"],
 
   data() {
     return {
@@ -66,24 +54,18 @@ export default {
         image: "https://via.placeholder.com/150x100",
       },
       validation: {
-        inputId: "",
-        inputPw: "",
+        inputName: "",
+        inputDescription: "",
+        inputQuantity: "",
+        inputPrice: "",
       },
     };
   },
 
-  computed: {
-    ...mapState("product", ["product"]),
-  },
-
   async mounted() {
-    console.log('==>',this.$route.params.id)
-    this.getProduct(this.$route.params.id);
-    this.getAllProducts()
+    const item = await this.getProduct(this.$route.params.id);
 
-    console.log("form=======>editdata", this.product);
-
-   this.input = this.product;
+    this.input = item;
 
     let user = localStorage.getItem("user");
     if (!user) {
@@ -91,25 +73,38 @@ export default {
     }
   },
 
-  // created() {
-  //   this.getProduct(this.productId);
-  // },
-
   methods: {
-    ...mapActions("product", ["getProduct", "editProduct", "getAllProducts"]),
-    navigator() {
-      this.$router.push("/");
+    ...mapActions("product", ["editProduct", "getProduct"]),
+
+    async onsubmit() {
+      if (this.validate()) {
+        const response = await this.editProduct(this.input);
+        console.log(response);
+        if (response) {
+          this.$router.push("/");
+        }
+      }
     },
-    // validate() {
-    //     if (!this.input.username && !this.input.password) {
-    //     this.validation.inputId = "Enter your username";
-    //     this.validation.inputPw = "Enter your password";
-    //   }else if (!this.input.username){
-    //     this.validation.inputId = "Enter your username";
-    //   }else if (!this.input.password){
-    //     this.validation.inputPw = "Enter your password";
-    //   }
-    // }
+    validate() {
+      let status = true;
+      if (!this.input.name) {
+        this.validation.inputName = "Enter your product name";
+        status = false;
+      }
+      if (!this.input.description) {
+        this.validation.inputDescription = "Enter description";
+        status = false;
+      }
+      if (!this.input.price) {
+        this.validation.inputPrice = "Enter product price";
+        status = false;
+      }
+      if (!this.input.quantity) {
+        this.validation.inputQuantity = "Enter quantity";
+        status = false;
+      }
+      return status;
+    },
   },
 };
 </script>

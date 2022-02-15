@@ -3,13 +3,13 @@ import APIs from "./APIs";
 const END_POINT = "products";
 
 export default {
-  createProduct({ name, description, price, quantity, image }) {
+  createProduct(product) {
     return APIs.post(END_POINT, {
-      name: name,
-      description: description,
-      price: price,
-      quantity: quantity,
-      image: image,
+      name: product.name,
+      description: product.description,
+      price: product.price,
+      quantity: product.quantity,
+      image: product.image,
     });
   },
 
@@ -25,13 +25,13 @@ export default {
     return APIs.get(`${END_POINT}?id=${id}`);
   },
 
-  editProduct({ id, name, description, price, quantity, image }) {
-    return APIs.put(`${END_POINT}/${id}`, {
-      name: name,
-      description: description,
-      price: price,
-      quantity: quantity,
-      image: image,
+  editProduct(product) {
+    return APIs.put(`${END_POINT}/${product.id}`, {
+      name: product.name,
+      description: product.description,
+      price: product.price,
+      quantity: product.quantity,
+      image: product.image,
     });
   },
 };

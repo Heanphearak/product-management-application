@@ -1,11 +1,12 @@
 import Products from "../../../apis/Products";
 
-export const createProduct = (
-  { commit },
-  { name, description, price, quantity, image }
-) => {
-  Products.createProduct({ name, description, price, quantity, image });
-  commit("SET_PRODUCT", { name, description, price, quantity, image });
+export const createProduct = ({ commit }, product) => {
+  return new Promise((resolve) => {
+    Products.createProduct(product).then((response) => {
+      commit("SET_PRODUCT", response.data);
+      resolve(response);
+    });
+  });
 };
 
 export const getAllProducts = ({ commit }) => {
@@ -14,23 +15,26 @@ export const getAllProducts = ({ commit }) => {
   });
 };
 
-export const getProduct = async ({ commit }, productId) => {
-  await Products.getProduct(productId).then((response) => {
-    console.log("111===>", response.data[0]);
-    commit("SET_PRODUCT", response.data[0]);
-  });
+export const getProduct = ({ commit }, productId) => {
+  return new Promise((resolve)=> {
+    Products.getProduct(productId).then((response) => {
+      commit("SET_PRODUCT", response.data[0]);
+      resolve(response.data[0])
+    });
+  }) 
+  
 };
 
 export const deleteProduct = ({ commit }, productId) => {
-  commit("REMOVE_PRODUCT", productId);
   Products.deleteProduct(productId);
+  commit("REMOVE_PRODUCT", productId);
 };
 
-export const editProduct = (
-  { commit },
-  { id, name, description, price, quantity, image }
-) => {
-  commit("EDIT_PRODUCT", { id, name, description, price, quantity, image });
-  Products.editProduct({ id, name, description, price, quantity, image });
+export const editProduct = ({ commit }, product) => {
+  return new Promise((resolve) => {
+    Products.editProduct(product).then((response) => {
+      commit("EDIT_PRODUCT", response.data);
+      resolve(response);
+    });
+  });
 };
-

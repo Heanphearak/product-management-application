@@ -1,15 +1,13 @@
 <template>
   <div>
-    <div></div>
-    <product-list/>
+    <product-list />
   </div>
 </template>
 
 <script>
-import ProductList from '../components/ProductList.vue';
+import ProductList from "../components/ProductList.vue";
 export default {
-  components: {ProductList  },
-  name: "Dashboard",
+  components: { ProductList },
 
   mounted() {
     let user = localStorage.getItem("user");
@@ -17,10 +15,6 @@ export default {
       this.$router.push("/login").catch(() => {});
     }
   },
-
-  methods: {},
-
-  computed: {},
 };
 </script>
 

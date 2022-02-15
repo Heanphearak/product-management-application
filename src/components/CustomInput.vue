@@ -1,46 +1,26 @@
 <template>
-    <div class="form-floating mb-3 col-3 m-auto ">
-      <input
-        v-on="$listeners" 
-        :type="type"
-        :value="value" 
-        class="form-control input-h"
-        @input="$emit('update', $event.target.value)"
-      />
-      <label>{{label}}</label>
-      <p class="error">{{error}}</p>
-    </div>
+  <div class="form-floating mb-3 col-3 m-auto">
+    <input
+      v-on="$listeners"
+      :type="type"
+      :value="value"
+      class="form-control input-h"
+      @input="$emit('update', $event.target.value)"
+    />
+    <label>{{ label }}</label>
+    <p class="error">{{ error }}</p>
+  </div>
 </template>
 
 <script>
-// import { mapActions } from "vuex";
 export default {
   name: "CustomInput",
 
   props: ["value", "label", "type", "error"],
-    model: {
-      prop: "value",
-      event: "update"
-    },
-
-  data() {
-    return {
-        
-    }
+  model: {
+    prop: "value",
+    event: "update",
   },
-
-  mounted() {
-    // let user = localStorage.getItem("user");
-    // if (user) {
-    //   this.$router.push("/");
-    // }
-  },
-
-  methods: {
-    // ...mapActions(["userLogin"]),
-  },
-
-  computed: {},
 };
 </script>
 
@@ -49,11 +29,11 @@ export default {
   height: 54px;
   margin: auto;
 }
-.item-center{
-     text-align: center;
+.item-center {
+  text-align: center;
 }
-.input-h{
-    height: 45px;
+.input-h {
+  height: 45px;
 }
 .error {
   color: red;
